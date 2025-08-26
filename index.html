@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supplement Database - Local Mockup</title>
+    
+    <!-- Bulma CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Mode Toggle (always visible) -->
+    <div class="mode-toggle">
+        <div class="buttons has-addons is-pulled-right m-3">
+            <button class="button is-small is-primary is-selected" id="simple-mode-btn">
+                Simple Mode
+            </button>
+            <button class="button is-small" id="power-mode-btn">
+                Power Mode
+            </button>
+        </div>
+        <div class="is-clearfix"></div>
+    </div>
+
+    <!-- Screen 1: Landing Page -->
+    <div id="landing-screen" class="screen">
+        <section class="hero is-fullheight">
+            <div class="hero-body">
+                <div class="container has-text-centered">
+                    <h1 class="title is-1 mb-6">
+                        Supplement Database
+                    </h1>
+                    <p class="subtitle is-4 mb-6">
+                        How can we help?
+                    </p>
+                    
+                    <!-- Search Bar -->
+                    <div class="field has-addons has-addons-centered mb-6">
+                        <div class="control">
+                            <input class="input is-large" type="text" placeholder="Search supplements or problems" id="main-search">
+                        </div>
+                        <div class="control">
+                            <button class="button is-primary is-large" id="main-search-btn">
+                                Search
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Two Main Paths -->
+                    <div class="columns is-centered">
+                        <div class="column is-4">
+                            <button class="button is-large is-fullwidth is-primary" id="need-help-btn">
+                                I need help with something
+                            </button>
+                        </div>
+                        <div class="column is-4">
+                            <button class="button is-large is-fullwidth is-info" id="know-what-btn">
+                                I know what I want
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Screen 2: Problem Selection -->
+    <div id="problem-screen" class="screen" style="display: none;">
+        <section class="section">
+            <div class="container">
+                <button class="button is-text mb-4" onclick="goBack()">← Back</button>
+                <h1 class="title is-2 has-text-centered mb-6">What's bothering you?</h1>
+                
+                <div class="columns is-multiline is-centered" id="problem-grid">
+                    <!-- Problems will be inserted here by JS -->
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Screen 3: Safety Check -->
+    <div id="safety-screen" class="screen" style="display: none;">
+        <section class="section">
+            <div class="container">
+                <button class="button is-text mb-4" onclick="goBack()">← Back</button>
+                <h1 class="title is-3 has-text-centered mb-6">Quick safety check</h1>
+                
+                <div class="box">
+                    <div class="field">
+                        <label class="label">Are you taking any medications?</label>
+                        <div class="control">
+                            <label class="radio">
+                                <input type="radio" name="medications" value="yes">
+                                Yes
+                            </label>
+                            <label class="radio ml-4">
+                                <input type="radio" name="medications" value="no" checked>
+                                No
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="field">
+                        <label class="label">Are you pregnant or nursing?</label>
+                        <div class="control">
+                            <label class="radio">
+                                <input type="radio" name="pregnant" value="yes">
+                                Yes
+                            </label>
+                            <label class="radio ml-4">
+                                <input type="radio" name="pregnant" value="no" checked>
+                                No
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="field">
+                        <label class="label">Any known allergies?</label>
+                        <div class="control">
+                            <label class="radio">
+                                <input type="radio" name="allergies" value="yes">
+                                Yes
+                            </label>
+                            <label class="radio ml-4">
+                                <input type="radio" name="allergies" value="no" checked>
+                                No
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="field is-grouped is-grouped-centered mt-5">
+                        <div class="control">
+                            <button class="button is-primary is-medium" id="show-recommendations-btn">
+                                See recommendations
+                            </button>
+                        </div>
+                        <div class="control">
+                            <button class="button is-text" id="skip-safety-btn">
+                                Skip (not recommended)
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Screen 4: Results -->
+    <div id="results-screen" class="screen" style="display: none;">
+        <section class="section">
+            <div class="container">
+                <button class="button is-text mb-4" onclick="goBack()">← Back</button>
+                <h1 class="title is-3 has-text-centered mb-6">
+                    Here's what might help with <span id="problem-name"></span>
+                </h1>
+                
+                <div id="results-container">
+                    <!-- Results will be inserted here by JS -->
+                </div>
+                
+                <div class="has-text-centered mt-6">
+                    <button class="button is-light" onclick="showScreen('landing-screen')">
+                        Start over
+                    </button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Screen 5: Browse Mode -->
+    <div id="browse-screen" class="screen" style="display: none;">
+        <section class="section">
+            <div class="container">
+                <button class="button is-text mb-4" onclick="goBack()">← Back</button>
+                <h1 class="title is-3 has-text-centered mb-6">Browse Supplements</h1>
+                
+                <!-- Search and Filters -->
+                <div class="box">
+                    <div class="field">
+                        <div class="control">
+                            <input class="input" type="text" placeholder="Search supplements..." id="browse-search">
+                        </div>
+                    </div>
+                    
+                    <div class="field is-grouped is-grouped-multiline" id="category-filters">
+                        <!-- Category buttons will be inserted here -->
+                    </div>
+                    
+                    <div class="field">
+                        <label class="label">Sort by:</label>
+                        <div class="control">
+                            <div class="select">
+                                <select id="sort-select">
+                                    <option value="name">A-Z</option>
+                                    <option value="price">Price: Low to High</option>
+                                    <option value="research">Most Researched</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="browse-results" class="columns is-multiline">
+                    <!-- Browse results will be inserted here -->
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Screen 6: Supplement Detail -->
+    <div id="detail-screen" class="screen" style="display: none;">
+        <section class="section">
+            <div class="container">
+                <button class="button is-text mb-4" onclick="goBack()">← Back</button>
+                
+                <div id="supplement-detail">
+                    <!-- Detail content will be inserted here -->
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Screen 7: Stack View -->
+    <div id="stack-screen" class="screen" style="display: none;">
+        <section class="section">
+            <div class="container">
+                <button class="button is-text mb-4" onclick="goBack()">← Back</button>
+                <h1 class="title is-3 has-text-centered mb-6">Your Stack</h1>
+                
+                <div id="stack-content">
+                    <!-- Stack items will be inserted here -->
+                </div>
+                
+                <div class="has-text-centered mt-6">
+                    <button class="button is-danger" onclick="clearStack()">
+                        Clear Stack
+                    </button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Floating Stack Button -->
+    <button class="button is-primary is-rounded stack-float-btn" id="stack-float-btn" style="display: none;">
+        Stack (<span id="stack-count">0</span>)
+    </button>
+
+    <!-- Scripts -->
+    <script src="mock-data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

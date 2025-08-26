@@ -1,0 +1,340 @@
+/* Custom styles for Supplement Database Mockup - Version 001 */
+
+/* General */
+body {
+    min-height: 100vh;
+    padding-top: 52px; /* Account for fixed navbar */
+    background-color: #f8fafc;
+    font-family: "Inter", sans-serif !important;
+}
+
+/* Force Inter font on all Bulma elements that override it */
+.button,
+.input,
+.textarea,
+.select select,
+.title,
+.subtitle,
+.navbar,
+.navbar-item,
+.navbar-link,
+.content,
+.box,
+.label,
+.help,
+.breadcrumb,
+.card,
+.menu,
+.message,
+.modal-card,
+.pagination,
+.panel,
+.tabs {
+    font-family: "Inter", sans-serif !important;
+}
+
+.screen {
+    min-height: calc(100vh - 52px);
+    padding-bottom: 100px; /* Space for floating button */
+}
+
+/* Navbar Customization */
+.navbar {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+}
+
+.navbar-brand strong {
+    color: #363636;
+}
+
+/* Mode Toggle Button in Navbar */
+.mode-toggle-btn {
+    transition: all 0.3s;
+}
+
+.mode-toggle-btn.is-info {
+    background-color: #3e8ed0;
+    color: white;
+}
+
+.mode-toggle-btn.is-primary {
+    background-color: #00d1b2;
+    color: white;
+}
+
+/* Problem Selection */
+.problem-box {
+    cursor: pointer;
+    transition: all 0.3s;
+    min-height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.problem-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+/* Browse Items */
+.browse-item {
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.browse-item:hover {
+    background-color: #f5f5f5;
+    transform: translateY(-2px);
+}
+
+/* Floating Stack Button */
+.stack-float-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 40; /* Below navbar z-index */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    min-width: 120px;
+    height: 50px;
+    font-size: 1.1rem;
+}
+
+.stack-float-btn:hover {
+    transform: scale(1.05);
+}
+
+/* Category Filter Buttons */
+.category-filter {
+    margin: 2px;
+}
+
+/* Results Cards */
+.results-card {
+    transition: all 0.3s;
+}
+
+.results-card:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Hero adjustments for fixed navbar */
+.hero.is-fullheight {
+    min-height: calc(100vh - 52px);
+}
+
+/* Mobile Responsive */
+@media screen and (max-width: 768px) {
+    body {
+        padding-top: 52px;
+    }
+    
+    .hero-body {
+        padding: 1.5rem;
+    }
+    
+    .problem-box {
+        min-height: 120px;
+    }
+    
+    .stack-float-btn {
+        bottom: 20px;
+        right: 20px;
+        min-width: 100px;
+        height: 45px;
+        font-size: 1rem;
+    }
+    
+    /* Make columns full width on mobile */
+    .column.is-3,
+    .column.is-4 {
+        width: 50%;
+    }
+    
+    /* Stack screen mobile adjustments */
+    #stack-screen .level {
+        display: block;
+    }
+    
+    #stack-screen .level-left,
+    #stack-screen .level-right {
+        display: block;
+        margin-top: 10px;
+    }
+    
+    /* Navbar adjustments */
+    .navbar-menu {
+        box-shadow: 0 8px 16px rgba(10,10,10,.1);
+    }
+    
+    .navbar-menu .navbar-item {
+        padding: 0.75rem 1rem;
+    }
+}
+
+/* Search bar improvements */
+#main-search {
+    min-width: 300px;
+}
+
+@media screen and (max-width: 768px) {
+    #main-search {
+        min-width: 200px;
+    }
+}
+
+/* Notification improvements */
+.notification {
+    margin-bottom: 1rem;
+}
+
+/* Tag improvements */
+.tag {
+    margin-right: 0.25rem;
+    margin-bottom: 0.25rem;
+}
+
+/* Loading state (for future use) */
+.is-loading-custom {
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+/* Smooth transitions */
+* {
+    transition: opacity 0.3s ease;
+}
+
+/* Hide screens properly */
+.screen[style*="display: none"] {
+    display: none !important;
+}
+
+/* Better back button */
+.button.is-text {
+    text-decoration: none;
+}
+
+.button.is-text:hover {
+    text-decoration: underline;
+}
+
+/* Results improvements */
+#results-container .box {
+    transition: all 0.3s;
+}
+
+#results-container .box:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Stack view improvements */
+#stack-content .level {
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+#stack-content .level:last-child {
+    border-bottom: none;
+}
+
+/* Advanced mode dense display */
+body.advanced-mode .box {
+    padding: 1rem;
+}
+
+body.advanced-mode .title {
+    margin-bottom: 0.5rem !important;
+}
+
+/* Simple mode spacious display */
+body.simple-mode .box {
+    padding: 2rem;
+}
+
+body.simple-mode .title {
+    margin-bottom: 1rem !important;
+}
+
+/* Fix Bulma select arrow position */
+.select:not(.is-multiple):not(.is-loading)::after {
+    border-color: #3273dc;
+    right: 1.125em;
+    z-index: 4;
+}
+
+/* Better form controls */
+.radio + .radio {
+    margin-left: 1rem;
+}
+
+/* Improve button states */
+.button:active {
+    transform: scale(0.98);
+}
+
+.button.is-success {
+    transition: all 0.3s;
+}
+
+/* FAQ, About, Contact screens styling */
+.content .box {
+    margin-bottom: 1.5rem;
+}
+
+.content h3 {
+    color: #363636;
+}
+
+.content ul {
+    margin-left: 2em;
+}
+
+/* Print styles (for future export feature) */
+@media print {
+    .navbar,
+    .stack-float-btn,
+    .button,
+    button {
+        display: none !important;
+    }
+    
+    body {
+        padding-top: 0;
+    }
+    
+    .screen {
+        page-break-inside: avoid;
+    }
+}
+
+/* Make sure navbar links don't have underlines */
+.navbar-item {
+    text-decoration: none !important;
+}
+
+/* Contact form styling */
+#contact-screen .box {
+    background-color: #fafafa;
+}
+
+#contact-screen .input,
+#contact-screen .textarea,
+#contact-screen .select select {
+    background-color: white;
+}
+
+/* Evidence level tags consistent coloring */
+.tag.is-success {
+    background-color: #48c78e;
+}
+
+.tag.is-info {
+    background-color: #3e8ed0;
+}
+
+.tag.is-warning {
+    background-color: #ffe08a;
+    color: rgba(0,0,0,.7);
+}
