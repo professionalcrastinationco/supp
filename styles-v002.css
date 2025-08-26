@@ -7,6 +7,36 @@ body {
     padding-top: 52px; /* Account for fixed navbar */
     background-color: #f8fafc;
     font-family: "Inter", sans-serif;
+    -webkit-tap-highlight-color: transparent; /* Remove tap highlight on iOS */
+    -webkit-touch-callout: none; /* Disable callout on long-press */
+}
+
+/* CRITICAL: Make all interactive elements explicitly clickable for mobile */
+button,
+.button,
+a,
+[role="button"],
+[data-action],
+.problem-box,
+.browse-item,
+.category-filter,
+.navbar-burger,
+.navbar-item,
+input[type="checkbox"],
+input[type="radio"],
+label {
+    cursor: pointer !important;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation; /* Disable double-tap zoom */
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+/* Ensure buttons are touch-friendly */
+button,
+.button {
+    min-height: 44px; /* iOS minimum touch target */
+    min-width: 44px;
 }
 
 /* Force Inter font on all Bulma elements that override it */

@@ -22,7 +22,7 @@
     <nav class="navbar is-fixed-top is-white" role="navigation" aria-label="main navigation">
         <div class="container">
             <div class="navbar-brand">
-                <a class="navbar-item" href="#" onclick="showScreen('landing-screen'); return false;">
+                <a class="navbar-item" href="#" data-action="showScreen" data-param="landing-screen">
                     <strong class="is-size-4">Whole Health DB</strong>
                 </a>
 
@@ -35,29 +35,29 @@
 
             <div id="navMenu" class="navbar-menu">
                 <div class="navbar-end">
-                    <a class="navbar-item" href="#" onclick="showScreen('landing-screen'); return false;">
+                    <a class="navbar-item" href="#" data-action="showScreen" data-param="landing-screen">
                         Home
                     </a>
-                    <a class="navbar-item" href="#" onclick="showProblemSelection(); return false;">
+                    <a class="navbar-item" href="#" data-action="showProblemSelection">
                         Conditions
                     </a>
-                    <a class="navbar-item" href="#" onclick="showBrowseScreen(); return false;">
+                    <a class="navbar-item" href="#" data-action="showBrowseScreen">
                         All Ingredients
                     </a>
-                    <a class="navbar-item" href="#" onclick="showNaturalIngredients(); return false;">
+                    <a class="navbar-item" href="#" data-action="showNaturalIngredients">
                         Natural Ingredients
                     </a>
-                    <a class="navbar-item" href="#" onclick="showScreen('faq-screen'); return false;">
+                    <a class="navbar-item" href="#" data-action="showScreen" data-param="faq-screen">
                         FAQ
                     </a>
-                    <a class="navbar-item" href="#" onclick="showScreen('about-screen'); return false;">
+                    <a class="navbar-item" href="#" data-action="showScreen" data-param="about-screen">
                         About
                     </a>
-                    <a class="navbar-item" href="#" onclick="showScreen('contact-screen'); return false;">
+                    <a class="navbar-item" href="#" data-action="showScreen" data-param="contact-screen">
                         Contact
                     </a>
                     <div class="navbar-item">
-                        <button class="button is-small mode-toggle-btn" id="mode-toggle-btn" onclick="toggleMode()">
+                        <button class="button is-small mode-toggle-btn" id="mode-toggle-btn" data-action="toggleMode">
                             Simple
                         </button>
                     </div>
@@ -112,7 +112,7 @@
     <div id="problem-screen" class="screen" style="display: none;">
         <section class="section">
             <div class="container">
-                <button class="button is-text mb-4" onclick="goBack()">← Back</button>
+                <button class="button is-text mb-4" data-action="goBack">← Back</button>
                 <h1 class="title is-2 has-text-centered mb-6">What's bothering you?</h1>
                 
                 <div class="columns is-multiline is-centered" id="problem-grid">
@@ -203,7 +203,7 @@
                 </div>
                 
                 <div class="has-text-centered mt-6">
-                    <button class="button is-light" onclick="showScreen('landing-screen')">
+                    <button class="button is-light" data-action="showScreen" data-param="landing-screen">
                         Start over
                     </button>
                 </div>
@@ -276,7 +276,7 @@
                 </div>
                 
                 <div class="has-text-centered mt-6">
-                    <button class="button is-danger" onclick="clearStack()">
+                    <button class="button is-danger" data-action="clearStack">
                         Clear Stack
                     </button>
                 </div>

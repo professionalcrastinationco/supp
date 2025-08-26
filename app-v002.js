@@ -18,10 +18,16 @@ let userSafetyProfile = {
 
 // Initialize when page loads
 document.addEventListener('DOMContentLoaded', function() {
+    // Debug alert for mobile
+    alert('JavaScript is running! v002');
     initializeApp();
 });
 
 function initializeApp() {
+    // Set up event delegation for dynamic content
+    document.body.addEventListener('click', handleGlobalClick);
+    document.body.addEventListener('touchstart', function() {}, {passive: true}); // iOS fix
+    
     // Set up event listeners
     document.getElementById('need-help-btn').addEventListener('click', showProblemSelection);
     document.getElementById('know-what-btn').addEventListener('click', showBrowseScreen);
@@ -41,6 +47,15 @@ function initializeApp() {
         document.getElementById('sort-select').addEventListener('change', filterBrowseResults);
     }
     
+    // Add change listener for checkbox filters
+    document.body.addEventListener('change', function(e) {
+        if (e.target.type === 'checkbox' && e.target.hasAttribute('data-action')) {
+            if (e.target.getAttribute('data-action') === 'filterBrowse') {
+                filterBrowseResults();
+            }
+        }
+    });
+    
     // Mobile menu toggle
     const burger = document.getElementById('navbar-burger');
     const menu = document.getElementById('navMenu');
@@ -51,6 +66,62 @@ function initializeApp() {
     
     updateStackCount();
     showScreen('landing-screen');
+}
+
+// Global click handler for all dynamic content
+function handleGlobalClick(e) {
+    const target = e.target.closest('[data-action]');
+    if (!target) return;
+    
+    e.preventDefault();
+    e.stopPropagation(); // Prevent event bubbling
+    const action = target.getAttribute('data-action');
+    const param = target.getAttribute('data-param');
+    
+    // Debug log for mobile
+    console.log('Click detected:', action, param);
+    
+    switch(action) {
+        case 'showScreen':
+            showScreen(param);
+            break;
+        case 'showProblemSelection':
+            showProblemSelection();
+            break;
+        case 'showBrowseScreen':
+            showBrowseScreen();
+            break;
+        case 'selectProblem':
+            selectProblem(param);
+            break;
+        case 'showSupplementDetail':
+            showSupplementDetail(param);
+            break;
+        case 'addToStack':
+            addToStack(param);
+            break;
+        case 'removeFromStack':
+            removeFromStack(param);
+            break;
+        case 'filterBrowse':
+            filterBrowseResults();
+            break;
+        case 'toggleMode':
+            toggleMode();
+            break;
+        case 'goBack':
+            goBack();
+            break;
+        case 'clearStack':
+            clearStack();
+            break;
+        case 'showNaturalIngredients':
+            showNaturalIngredients();
+            break;
+        case 'showStackScreen':
+            showStackScreen();
+            break;
+    }
 }
 
 // Check if a supplement is contraindicated for the user
@@ -133,7 +204,7 @@ function showProblemSelection() {
         const col = document.createElement('div');
         col.className = 'column is-3';
         col.innerHTML = `
-            <div class="box problem-box has-text-centered" onclick="selectProblem('${problem.id}')">
+            <div class="box problem-box has-text-centered" data-action="selectProblem" data-param="${problem.id}" style="cursor: pointer;">
                 <span class="is-size-1">${problem.icon}</span>
                 <p class="is-size-5 mt-2">${problem.name}</p>
             </div>
@@ -206,10 +277,10 @@ function showRecommendations() {
                     </div>
                     <nav class="level is-mobile">
                         <div class="level-left">
-                            <a class="level-item button is-small is-info" onclick="showSupplementDetail('${supplement.id}')">
+                            <a class="level-item button is-small is-info" data-action="showSupplementDetail" data-param="${supplement.id}">
                                 Learn more
                             </a>
-                            <a class="level-item button is-small is-primary" onclick="addToStack('${supplement.id}')">
+                            <a class="level-item button is-small is-primary" data-action="addToStack" data-param="${supplement.id}">
                                 Add to stack
                             </a>
                         </div>
@@ -246,8 +317,8 @@ function showBrowseScreen() {
         tag.className = 'control';
         tag.innerHTML = `
             <div class="tags has-addons">
-                <label class="tag is-medium category-filter">
-                    <input type="checkbox" value="${cat}" onchange="filterBrowseResults()">
+                <label class="tag is-medium category-filter" style="cursor: pointer;">
+                    <input type="checkbox" value="${cat}" data-action="filterBrowse">
                     &nbsp;${cat}
                 </label>
             </div>
@@ -332,7 +403,7 @@ function displayBrowseResults(supplements) {
         const col = document.createElement('div');
         col.className = 'column is-4';
         col.innerHTML = `
-            <div class="box browse-item ${contraindication ? 'has-background-danger-light' : ''}" onclick="showSupplementDetail('${supplement.id}')">
+            <div class="box browse-item ${contraindication ? 'has-background-danger-light' : ''}" data-action="showSupplementDetail" data-param="${supplement.id}" style="cursor: pointer;">
                 ${getWarningHtml(contraindication)}
                 <h4 class="title is-5">${supplement.name}</h4>
                 <p class="subtitle is-6">${supplement.category}</p>
@@ -408,7 +479,7 @@ function showSupplementDetail(supplementId) {
                 </span>
             </div>
             
-            <button class="button is-primary is-medium" onclick="addToStack('${supplement.id}')">
+            <button class="button is-primary is-medium" data-action="addToStack" data-param="${supplement.id}">
                 Add to Stack
             </button>
         </div>
@@ -506,7 +577,7 @@ function showStackScreen() {
                         </div>
                     </div>
                     <div class="level-right">
-                        <button class="button is-small is-danger" onclick="removeFromStack('${item.id}')">
+                        <button class="button is-small is-danger" data-action="removeFromStack" data-param="${item.id}">
                             Remove
                         </button>
                     </div>
