@@ -32,8 +32,14 @@ function initializeApp() {
     document.getElementById('show-recommendations-btn').addEventListener('click', showRecommendations);
     document.getElementById('skip-safety-btn').addEventListener('click', skipSafety);
     document.getElementById('stack-float-btn').addEventListener('click', showStackScreen);
-    document.getElementById('browse-search').addEventListener('input', filterBrowseResults);
-    document.getElementById('sort-select').addEventListener('change', filterBrowseResults);
+    
+    // Only add these listeners if elements exist (they're on browse screen only)
+    if (document.getElementById('browse-search')) {
+        document.getElementById('browse-search').addEventListener('input', filterBrowseResults);
+    }
+    if (document.getElementById('sort-select')) {
+        document.getElementById('sort-select').addEventListener('change', filterBrowseResults);
+    }
     
     // Mobile menu toggle
     const burger = document.getElementById('navbar-burger');

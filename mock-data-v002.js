@@ -515,13 +515,3 @@ const mockProblems = [
         topSupplements: ["vitamin-d", "zinc", "probiotics", "omega-3"]
     }
 ];
-
-// New: Store safety check responses (not persisted)
-let userSafetyProfile = {
-    takingMedications: false,
-    isPregnant: false,
-    hasAllergies: false,
-    // These would be populated if we add detailed inputs later
-    specificMedications: [],
-    specificAllergies: []
-};
