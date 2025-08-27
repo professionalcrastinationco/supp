@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
     
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="styles-v002.css">
+    <link rel="stylesheet" href="styles-v004.css">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,7 +22,7 @@
     <nav class="navbar is-fixed-top is-white" role="navigation" aria-label="main navigation">
         <div class="container">
             <div class="navbar-brand">
-                <a class="navbar-item" href="#" onclick="showScreen('landing-screen'); return false;">
+                <a class="navbar-item" href="#" data-action="showScreen" data-param="landing-screen">
                     <strong class="is-size-4">Whole Health DB</strong>
                 </a>
 
@@ -35,29 +35,29 @@
 
             <div id="navMenu" class="navbar-menu">
                 <div class="navbar-end">
-                    <a class="navbar-item" href="#" onclick="showScreen('landing-screen'); return false;">
+                    <a class="navbar-item" href="#" data-action="showScreen" data-param="landing-screen">
                         Home
                     </a>
-                    <a class="navbar-item" href="#" onclick="showProblemSelection(); return false;">
+                    <a class="navbar-item" href="#" data-action="showProblemSelection">
                         Conditions
                     </a>
-                    <a class="navbar-item" href="#" onclick="showBrowseScreen(); return false;">
+                    <a class="navbar-item" href="#" data-action="showBrowseScreen">
                         All Ingredients
                     </a>
-                    <a class="navbar-item" href="#" onclick="showNaturalIngredients(); return false;">
+                    <a class="navbar-item" href="#" data-action="showNaturalIngredients">
                         Natural Ingredients
                     </a>
-                    <a class="navbar-item" href="#" onclick="showScreen('faq-screen'); return false;">
+                    <a class="navbar-item" href="#" data-action="showScreen" data-param="faq-screen">
                         FAQ
                     </a>
-                    <a class="navbar-item" href="#" onclick="showScreen('about-screen'); return false;">
+                    <a class="navbar-item" href="#" data-action="showScreen" data-param="about-screen">
                         About
                     </a>
-                    <a class="navbar-item" href="#" onclick="showScreen('contact-screen'); return false;">
+                    <a class="navbar-item" href="#" data-action="showScreen" data-param="contact-screen">
                         Contact
                     </a>
                     <div class="navbar-item">
-                        <button class="button is-small mode-toggle-btn" id="mode-toggle-btn" onclick="toggleMode()">
+                        <button class="button is-small mode-toggle-btn" id="mode-toggle-btn" data-action="toggleMode">
                             Simple
                         </button>
                     </div>
@@ -91,13 +91,11 @@
                     </div>
                     
                     <!-- Two Main Paths -->
-                    <div class="columns is-centered">
-                        <div class="column is-4">
-                            <button class="button is-large is-fullwidth is-primary" id="need-help-btn">
+                    <div class="columns is-centered is-mobile">
+                        <div class="column is-10-mobile is-4-tablet">
+                            <button class="button is-large is-fullwidth is-primary mb-3" id="need-help-btn">
                                 I need help with something
                             </button>
-                        </div>
-                        <div class="column is-4">
                             <button class="button is-large is-fullwidth is-info" id="know-what-btn">
                                 I know what I want
                             </button>
@@ -112,7 +110,7 @@
     <div id="problem-screen" class="screen" style="display: none;">
         <section class="section">
             <div class="container">
-                <button class="button is-text mb-4" onclick="goBack()">← Back</button>
+                <!-- <button class="button is-text mb-4" data-action="goBack">← Back</button> -->
                 <h1 class="title is-2 has-text-centered mb-6">What's bothering you?</h1>
                 
                 <div class="columns is-multiline is-centered" id="problem-grid">
@@ -122,14 +120,28 @@
         </section>
     </div>
 
-    <!-- Screen 3: Safety Check -->
+    <!-- Screen 3: Safety Check Modal -->
     <div id="safety-screen" class="screen" style="display: none;">
-        <section class="section">
-            <div class="container">
-                <button class="button is-text mb-4" onclick="goBack()">← Back</button>
-                <h1 class="title is-3 has-text-centered mb-6">Quick safety check</h1>
+        <!-- Dark backdrop -->
+        <div class="modal-backdrop"></div>
+        
+        <!-- Modal content -->
+        <div class="safety-modal">
+            <div class="modal-card">
+                <!-- Header with icon -->
+                <header class="modal-card-head safety-header">
+                    <div class="modal-card-title">
+                        <span class="safety-icon">🛡️</span>
+                        <span class="safety-title">Safety Check</span>
+                    </div>
+                </header>
                 
-                <div class="box">
+                <!-- Body -->
+                <section class="modal-card-body">
+                    <p class="subtitle is-6 has-text-centered mb-5">
+                        Help us recommend supplements safely for your situation
+                    </p>
+                    
                     <div class="field">
                         <label class="label">Are you taking any medications?</label>
                         <div class="control">
@@ -171,29 +183,26 @@
                             </label>
                         </div>
                     </div>
-                    
-                    <div class="field is-grouped is-grouped-centered mt-5">
-                        <div class="control">
-                            <button class="button is-primary is-medium" id="show-recommendations-btn">
-                                See recommendations
-                            </button>
-                        </div>
-                        <div class="control">
-                            <button class="button is-text" id="skip-safety-btn">
-                                Skip (not recommended)
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                </section>
+                
+                <!-- Footer -->
+                <footer class="modal-card-foot">
+                    <button class="button is-warning is-medium" id="show-recommendations-btn">
+                        Continue to Recommendations
+                    </button>
+                    <button class="button is-text is-small" id="skip-safety-btn">
+                        Skip (not recommended)
+                    </button>
+                </footer>
             </div>
-        </section>
+        </div>
     </div>
 
     <!-- Screen 4: Results -->
     <div id="results-screen" class="screen" style="display: none;">
         <section class="section">
             <div class="container">
-                <button class="button is-text mb-4" onclick="goBack()">← Back</button>
+                <!-- <button class="button is-text mb-4" data-action="goBack">← Back</button> -->
                 <h1 class="title is-3 has-text-centered mb-6">
                     Here's what might help with <span id="problem-name"></span>
                 </h1>
@@ -203,7 +212,7 @@
                 </div>
                 
                 <div class="has-text-centered mt-6">
-                    <button class="button is-light" onclick="showScreen('landing-screen')">
+                    <button class="button is-light" data-action="showScreen" data-param="landing-screen">
                         Start over
                     </button>
                 </div>
@@ -215,8 +224,8 @@
     <div id="browse-screen" class="screen" style="display: none;">
         <section class="section">
             <div class="container">
-                <button class="button is-text mb-4" onclick="goBack()">← Back</button>
-                <h1 class="title is-3 has-text-centered mb-6">Browse Supplements</h1>
+                <!-- <button class="button is-text mb-4" data-action="goBack">← Back</button> -->
+                <h1 class="title is-2 has-text-centered mb-6">Browse Supplements</h1>
                 
                 <!-- Search and Filters -->
                 <div class="box">
@@ -255,7 +264,7 @@
     <div id="detail-screen" class="screen" style="display: none;">
         <section class="section">
             <div class="container">
-                <button class="button is-text mb-4" onclick="goBack()">← Back</button>
+                <!-- <button class="button is-text mb-4" data-action="goBack">← Back</button> -->
                 
                 <div id="supplement-detail">
                     <!-- Detail content will be inserted here -->
@@ -268,7 +277,7 @@
     <div id="stack-screen" class="screen" style="display: none;">
         <section class="section">
             <div class="container">
-                <button class="button is-text mb-4" onclick="goBack()">← Back</button>
+                <!-- <button class="button is-text mb-4" data-action="goBack">← Back</button> -->
                 <h1 class="title is-3 has-text-centered mb-6">Your Stack</h1>
                 
                 <div id="stack-content">
@@ -276,7 +285,7 @@
                 </div>
                 
                 <div class="has-text-centered mt-6">
-                    <button class="button is-danger" onclick="clearStack()">
+                    <button class="button is-danger" data-action="clearStack">
                         Clear Stack
                     </button>
                 </div>
@@ -288,7 +297,7 @@
     <div id="faq-screen" class="screen" style="display: none;">
         <section class="section">
             <div class="container">
-                <button class="button is-text mb-4" onclick="goBack()">← Back</button>
+                <!-- <button class="button is-text mb-4" data-action="goBack">← Back</button> -->
                 <h1 class="title is-2 has-text-centered mb-6">Frequently Asked Questions</h1>
                 
                 <div class="columns">
@@ -342,7 +351,7 @@
     <div id="about-screen" class="screen" style="display: none;">
         <section class="section">
             <div class="container">
-                <button class="button is-text mb-4" onclick="goBack()">← Back</button>
+                <!-- <button class="button is-text mb-4" data-action="goBack">← Back</button> -->
                 <h1 class="title is-2 has-text-centered mb-6">About Whole Health DB</h1>
                 
                 <div class="columns">
@@ -396,7 +405,7 @@
     <div id="contact-screen" class="screen" style="display: none;">
         <section class="section">
             <div class="container">
-                <button class="button is-text mb-4" onclick="goBack()">← Back</button>
+                <!-- <button class="button is-text mb-4" data-action="goBack">← Back</button> -->
                 <h1 class="title is-2 has-text-centered mb-6">Contact Us</h1>
                 
                 <div class="columns">
@@ -467,7 +476,7 @@
     </button>
 
     <!-- Scripts -->
-    <script src="mock-data-v002.js"></script>
-    <script src="app-v002.js"></script>
+    <script src="mock-data-v004.js"></script>
+    <script src="app-v004.js"></script>
 </body>
 </html>

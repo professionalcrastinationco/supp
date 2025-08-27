@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Whole Health DB - Local Mockup</title>
+    
+    <!-- Bulma CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles-v002.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    <!-- Sticky Header -->
+    <nav class="navbar is-fixed-top is-white" role="navigation" aria-label="main navigation">
+        <div class="container">
+            <div class="navbar-brand">
+                <a class="navbar-item" href="#" data-action="showScreen" data-param="landing-screen">
+                    <strong class="is-size-4">Whole Health DB</strong>
+                </a>
+
+                <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navMenu" id="navbar-burger">
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                </a>
+            </div>
+
+            <div id="navMenu" class="navbar-menu">
+                <div class="navbar-end">
+                    <a class="navbar-item" href="#" data-action="showScreen" data-param="landing-screen">
+                        Home
+                    </a>
+                    <a class="navbar-item" href="#" data-action="showProblemSelection">
+                        Conditions
+                    </a>
+                    <a class="navbar-item" href="#" data-action="showBrowseScreen">
+                        All Ingredients
+                    </a>
+                    <a class="navbar-item" href="#" data-action="showNaturalIngredients">
+                        Natural Ingredients
+                    </a>
+                    <a class="navbar-item" href="#" data-action="showScreen" data-param="faq-screen">
+                        FAQ
+                    </a>
+                    <a class="navbar-item" href="#" data-action="showScreen" data-param="about-screen">
+                        About
+                    </a>
+                    <a class="navbar-item" href="#" data-action="showScreen" data-param="contact-screen">
+                        Contact
+                    </a>
+                    <div class="navbar-item">
+                        <button class="button is-small mode-toggle-btn" id="mode-toggle-btn" data-action="toggleMode">
+                            Simple
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Screen 1: Landing Page -->
+    <div id="landing-screen" class="screen">
+        <section class="hero is-fullheight">
+            <div class="hero-body">
+                <div class="container has-text-centered">
+                    <h1 class="title is-1 mb-6">
+                        Find What Works
+                    </h1>
+                    <p class="subtitle is-4 mb-6">
+                        Evidence-based supplement recommendations without the BS
+                    </p>
+                    
+                    <!-- Search Bar -->
+                    <div class="field has-addons has-addons-centered mb-6">
+                        <div class="control">
+                            <input class="input is-large" type="text" placeholder="Search supplements or problems" id="main-search">
+                        </div>
+                        <div class="control">
+                            <button class="button is-primary is-large" id="main-search-btn">
+                                Search
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Two Main Paths -->
+                    <div class="columns is-centered is-mobile">
+                        <div class="column is-10-mobile is-4-tablet">
+                            <button class="button is-large is-fullwidth is-primary mb-3" id="need-help-btn">
+                                I need help with something
+                            </button>
+                            <button class="button is-large is-fullwidth is-info" id="know-what-btn">
+                                I know what I want
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Screen 2: Problem Selection -->
+    <div id="problem-screen" class="screen" style="display: none;">
+        <section class="section">
+            <div class="container">
+                <!-- <button class="button is-text mb-4" data-action="goBack">← Back</button> -->
+                <h1 class="title is-2 has-text-centered mb-6">What's bothering you?</h1>
+                
+                <div class="columns is-multiline is-centered" id="problem-grid">
+                    <!-- Problems will be inserted here by JS -->
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Screen 3: Safety Check -->
+    <div id="safety-screen" class="screen" style="display: none;">
+        <section class="section">
+            <div class="container">
+                <!-- <button class="button is-text mb-4" data-action="goBack">← Back</button> -->
+                <h1 class="title is-3 has-text-centered mb-6">Quick safety check</h1>
+                
+                <div class="box has-text-centered">
+                    <div class="field">
+                        <label class="label">Are you taking any medications?</label>
+                        <div class="control">
+                            <label class="radio">
+                                <input type="radio" name="medications" value="yes">
+                                Yes
+                            </label>
+                            <label class="radio ml-4">
+                                <input type="radio" name="medications" value="no" checked>
+                                No
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="field">
+                        <label class="label">Are you pregnant or nursing?</label>
+                        <div class="control">
+                            <label class="radio">
+                                <input type="radio" name="pregnant" value="yes">
+                                Yes
+                            </label>
+                            <label class="radio ml-4">
+                                <input type="radio" name="pregnant" value="no" checked>
+                                No
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="field">
+                        <label class="label">Any known allergies?</label>
+                        <div class="control">
+                            <label class="radio">
+                                <input type="radio" name="allergies" value="yes">
+                                Yes
+                            </label>
+                            <label class="radio ml-4">
+                                <input type="radio" name="allergies" value="no" checked>
+                                No
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="field is-grouped is-grouped-centered mt-5">
+                        <div class="control">
+                            <button class="button is-primary is-medium" id="show-recommendations-btn">
+                                See recommendations
+                            </button>
+                        </div>
+                        <div class="control">
+                            <button class="button is-text" id="skip-safety-btn">
+                                Skip (not recommended)
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Screen 4: Results -->
+    <div id="results-screen" class="screen" style="display: none;">
+        <section class="section">
+            <div class="container">
+                <!-- <button class="button is-text mb-4" data-action="goBack">← Back</button> -->
+                <h1 class="title is-3 has-text-centered mb-6">
+                    Here's what might help with <span id="problem-name"></span>
+                </h1>
+                
+                <div id="results-container">
+                    <!-- Results will be inserted here by JS -->
+                </div>
+                
+                <div class="has-text-centered mt-6">
+                    <button class="button is-light" data-action="showScreen" data-param="landing-screen">
+                        Start over
+                    </button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Screen 5: Browse Mode -->
+    <div id="browse-screen" class="screen" style="display: none;">
+        <section class="section">
+            <div class="container">
+                <!-- <button class="button is-text mb-4" data-action="goBack">← Back</button> -->
+                <h1 class="title is-2 has-text-centered mb-6">Browse Supplements</h1>
+                
+                <!-- Search and Filters -->
+                <div class="box">
+                    <div class="field">
+                        <div class="control">
+                            <input class="input" type="text" placeholder="Search supplements..." id="browse-search">
+                        </div>
+                    </div>
+                    
+                    <div class="field is-grouped is-grouped-multiline" id="category-filters">
+                        <!-- Category buttons will be inserted here -->
+                    </div>
+                    
+                    <div class="field">
+                        <label class="label">Sort by:</label>
+                        <div class="control">
+                            <div class="select">
+                                <select id="sort-select">
+                                    <option value="name">A-Z</option>
+                                    <option value="price">Price: Low to High</option>
+                                    <option value="research">Most Researched</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="browse-results" class="columns is-multiline">
+                    <!-- Browse results will be inserted here -->
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Screen 6: Supplement Detail -->
+    <div id="detail-screen" class="screen" style="display: none;">
+        <section class="section">
+            <div class="container">
+                <!-- <button class="button is-text mb-4" data-action="goBack">← Back</button> -->
+                
+                <div id="supplement-detail">
+                    <!-- Detail content will be inserted here -->
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Screen 7: Stack View -->
+    <div id="stack-screen" class="screen" style="display: none;">
+        <section class="section">
+            <div class="container">
+                <!-- <button class="button is-text mb-4" data-action="goBack">← Back</button> -->
+                <h1 class="title is-3 has-text-centered mb-6">Your Stack</h1>
+                
+                <div id="stack-content">
+                    <!-- Stack items will be inserted here -->
+                </div>
+                
+                <div class="has-text-centered mt-6">
+                    <button class="button is-danger" data-action="clearStack">
+                        Clear Stack
+                    </button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Screen 8: FAQ -->
+    <div id="faq-screen" class="screen" style="display: none;">
+        <section class="section">
+            <div class="container">
+                <!-- <button class="button is-text mb-4" data-action="goBack">← Back</button> -->
+                <h1 class="title is-2 has-text-centered mb-6">Frequently Asked Questions</h1>
+                
+                <div class="columns">
+                    <div class="column is-8 is-offset-2">
+                        <div class="content">
+                    <div class="box">
+                        <h3 class="title is-4">Is this medical advice?</h3>
+                        <p>No. This database provides educational information only. Always consult with a healthcare professional before starting any supplement regimen.</p>
+                    </div>
+                    
+                    <div class="box">
+                        <h3 class="title is-4">How do you determine supplement quality?</h3>
+                        <p>We analyze third-party testing results, manufacturing standards (GMP certification), recall history, and transparency of sourcing. Brands are rated based on these objective criteria.</p>
+                    </div>
+                    
+                    <div class="box">
+                        <h3 class="title is-4">What's the difference between Simple and Advanced modes?</h3>
+                        <p><strong>Simple Mode:</strong> Shows 3 top recommendations with plain language explanations. Perfect for beginners.</p>
+                        <p><strong>Advanced Mode:</strong> Shows all options with technical details, research levels, and detailed mechanisms. For experienced users.</p>
+                    </div>
+                    
+                    <div class="box">
+                        <h3 class="title is-4">How accurate is your interaction checker?</h3>
+                        <p>We use multiple databases including DrugBank and peer-reviewed research. However, always verify interactions with your healthcare provider or pharmacist.</p>
+                    </div>
+                    
+                    <div class="box">
+                        <h3 class="title is-4">Do you sell supplements?</h3>
+                        <p>No. We never sell supplements directly. We may earn small commissions from affiliate links to verified retailers, but this never influences our recommendations.</p>
+                    </div>
+                    
+                    <div class="box">
+                        <h3 class="title is-4">How often is the database updated?</h3>
+                        <p>We review new research weekly and update our database monthly. Major safety alerts are added immediately.</p>
+                    </div>
+                    
+                    <div class="box">
+                        <h3 class="title is-4">Can I trust your evidence ratings?</h3>
+                        <p><span class="tag is-success">GOLD</span> = Multiple human RCTs with consistent results</p>
+                        <p><span class="tag is-info">SILVER</span> = Some human studies, promising but not definitive</p>
+                        <p><span class="tag is-warning">BRONZE</span> = Animal/cell studies only, limited human data</p>
+                    </div>
+                </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Screen 9: About -->
+    <div id="about-screen" class="screen" style="display: none;">
+        <section class="section">
+            <div class="container">
+                <!-- <button class="button is-text mb-4" data-action="goBack">← Back</button> -->
+                <h1 class="title is-2 has-text-centered mb-6">About Whole Health DB</h1>
+                
+                <div class="columns">
+                    <div class="column is-8 is-offset-2">
+                        <div class="content">
+                            <div class="box">
+                                <h3 class="title is-4">Our Mission</h3>
+                                <p>We're tired of the supplement industry's bullshit. Too many sites are either selling you their own products or drowning you in scientific jargon. We built Whole Health DB to be different.</p>
+                                <p>Our goal: Give you honest, evidence-based information about supplements without the sales pitch. No proprietary blends, no miracle cures, no pseudoscience.</p>
+                            </div>
+                            
+                            <div class="box">
+                                <h3 class="title is-4">How We're Different</h3>
+                                <ul>
+                                    <li><strong>Independent:</strong> We don't manufacture or sell supplements</li>
+                                    <li><strong>Transparent:</strong> All our funding sources are disclosed</li>
+                                    <li><strong>Evidence-based:</strong> Every claim is backed by research</li>
+                                    <li><strong>Safety-first:</strong> Warnings are never hidden or minimized</li>
+                                    <li><strong>User-focused:</strong> Built for real people, not supplement nerds</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="box">
+                                <h3 class="title is-4">Our Team</h3>
+                                <p>We're a small team of researchers, developers, and former supplement industry insiders who got fed up with the status quo. No venture capital, no corporate overlords, just a commitment to helping people make informed decisions.</p>
+                            </div>
+                            
+                            <div class="box">
+                                <h3 class="title is-4">Our Promise</h3>
+                                <p>We will never:</p>
+                                <ul>
+                                    <li>Hide safety information behind a paywall</li>
+                                    <li>Accept money to promote specific products</li>
+                                    <li>Sell your data</li>
+                                    <li>Make unsubstantiated health claims</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="box">
+                                <h3 class="title is-4">Support Our Work</h3>
+                                <p>We're funded by Pro subscriptions and transparent affiliate commissions. If you find this resource valuable, consider upgrading to Pro for advanced features and to keep us independent.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Screen 10: Contact -->
+    <div id="contact-screen" class="screen" style="display: none;">
+        <section class="section">
+            <div class="container">
+                <!-- <button class="button is-text mb-4" data-action="goBack">← Back</button> -->
+                <h1 class="title is-2 has-text-centered mb-6">Contact Us</h1>
+                
+                <div class="columns">
+                    <div class="column is-6 is-offset-3">
+                        <div class="box">
+                            <h3 class="title is-4">Get in Touch</h3>
+                            
+                            <div class="field">
+                                <label class="label">Name</label>
+                                <div class="control">
+                                    <input class="input" type="text" placeholder="Your name">
+                                </div>
+                            </div>
+                            
+                            <div class="field">
+                                <label class="label">Email</label>
+                                <div class="control">
+                                    <input class="input" type="email" placeholder="your@email.com">
+                                </div>
+                            </div>
+                            
+                            <div class="field">
+                                <label class="label">Subject</label>
+                                <div class="control">
+                                    <div class="select is-fullwidth">
+                                        <select>
+                                            <option>General Question</option>
+                                            <option>Report an Error</option>
+                                            <option>Suggest a Supplement</option>
+                                            <option>Partnership Inquiry</option>
+                                            <option>Technical Issue</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="field">
+                                <label class="label">Message</label>
+                                <div class="control">
+                                    <textarea class="textarea" placeholder="Your message..." rows="6"></textarea>
+                                </div>
+                            </div>
+                            
+                            <div class="field">
+                                <div class="control">
+                                    <button class="button is-primary is-fullwidth">Send Message</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="box">
+                            <h4 class="title is-5">Other Ways to Reach Us</h4>
+                            <p><strong>Report Safety Issues:</strong> safety@wholehealthdb.com</p>
+                            <p><strong>Research Inquiries:</strong> research@wholehealthdb.com</p>
+                            <p><strong>Media Contact:</strong> press@wholehealthdb.com</p>
+                            <br>
+                            <p class="is-size-7">We typically respond within 48 hours. For urgent safety concerns, please contact your healthcare provider immediately.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Floating Stack Button -->
+    <button class="button is-primary is-rounded stack-float-btn" id="stack-float-btn" style="display: none;">
+        Stack (<span id="stack-count">0</span>)
+    </button>
+
+    <!-- Scripts -->
+    <script src="mock-data-v003.js"></script>
+    <script src="app-v002.js"></script>
+</body>
+</html>

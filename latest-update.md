@@ -26,10 +26,36 @@ Still in Phase 1 - testing navigation and UX before building the real app
 Be direct, no corporate bullshit, light profanity is fine
 Call me out if I'm overcomplicating things
 
+## Version 002 Update - Safety Features Added
+
+### What's New:
+- **Safety check now functional** - Stores user's safety profile (medications, pregnancy, allergies)
+- **Contraindication data added** to all 15 supplements:
+  - pregnancy_safe: boolean flag
+  - medication_interactions: array of medications
+  - common_allergies: array of allergens
+- **Smart sorting** - Safe supplements show first, contraindicated ones pushed to bottom
+- **Visual warnings** - Red backgrounds and warning messages for unsafe supplements
+- **Warning messages inline** with each supplement card showing specific contraindication
+
+### How It Works:
+- User selections in safety check are stored in `userSafetyProfile` object
+- Results are sorted with `sortSupplementsBySafety()` function
+- Contraindicated supplements get red background (`has-background-danger-light`)
+- Warning notifications show specific safety concerns
+- Safety profile resets each session (not persisted)
+
+### Files Updated:
+- `mock-data-v002.js` - Added contraindication data to all supplements
+- `app-v002.js` - Added safety filtering logic and warning displays
+- `index-v002.html` - References v002 files
+- `styles-v002.css` - Added red warning styles and animations
+
 Next Priorities:
-Add safety check functionality that actually filters results based on user selections (pregnancy, medications, allergies)
-Continue refining the mockup based on testing
-Keep everything in simple HTML/CSS/JS - no build process needed
+- Expand to 50+ supplements for better testing of browse/filter
+- Add medication/allergy text inputs for specific warnings
+- Implement stack-to-stack interaction checking
+- Continue refining based on testing
 
 File Locations:
 

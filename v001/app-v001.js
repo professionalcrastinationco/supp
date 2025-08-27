@@ -151,9 +151,13 @@ function setupEventListeners() {
         showStack();
     });
     
-    // Browse search
-    document.getElementById('browse-search').addEventListener('input', filterBrowseResults);
-    document.getElementById('sort-select').addEventListener('change', sortBrowseResults);
+    // Browse search - only add if elements exist (they're on browse screen)
+    if (document.getElementById('browse-search')) {
+        document.getElementById('browse-search').addEventListener('input', filterBrowseResults);
+    }
+    if (document.getElementById('sort-select')) {
+        document.getElementById('sort-select').addEventListener('change', sortBrowseResults);
+    }
 }
 
 // Show Natural Ingredients (filtered browse)

@@ -1,0 +1,695 @@
+/* Custom styles for Supplement Database Mockup - Version 004 */
+/* Added modal safety check with proper backdrop and styling */
+
+/* General */
+body {
+    min-height: 100vh;
+    padding-top: 52px; /* Account for fixed navbar */
+    background-color: #f8fafc;
+    font-family: "Inter", sans-serif;
+    -webkit-tap-highlight-color: transparent; /* Remove tap highlight on iOS */
+    -webkit-touch-callout: none; /* Disable callout on long-press */
+}
+
+/* CRITICAL: Make all interactive elements explicitly clickable for mobile */
+button,
+.button,
+a,
+[role="button"],
+[data-action],
+.problem-box,
+.browse-item,
+.category-filter,
+.navbar-burger,
+.navbar-item,
+input[type="checkbox"],
+input[type="radio"],
+label {
+    cursor: pointer !important;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation; /* Disable double-tap zoom */
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+/* Ensure buttons are touch-friendly */
+button,
+.button {
+    min-height: 44px; /* iOS minimum touch target */
+    min-width: 44px;
+}
+
+/* Force Inter font on all Bulma elements that override it */
+.button,
+.input,
+.textarea,
+.select select,
+.title,
+.subtitle,
+.navbar,
+.navbar-item,
+.navbar-link,
+.content,
+.box,
+.label,
+.help,
+.breadcrumb,
+.card,
+.menu,
+.message,
+.modal-card,
+.pagination,
+.panel,
+.tabs {
+    font-family: "Inter", sans-serif !important;
+}
+
+.screen {
+    min-height: calc(100vh - 52px);
+    padding-bottom: 100px; /* Space for floating button */
+}
+
+/* ============================================================================
+   MODAL SAFETY CHECK STYLES
+   ============================================================================ */
+
+/* Modal backdrop - dark overlay */
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(3px);
+    z-index: 1000;
+    animation: fadeIn 0.3s ease;
+}
+
+/* Safety modal container - centered */
+.safety-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1001;
+    width: 90%;
+    max-width: 500px;
+    animation: modalSlideIn 0.4s ease;
+}
+
+/* Modal card styling */
+.safety-modal .modal-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    margin: 0;
+}
+
+/* Safety header styling */
+.safety-header {
+    background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+    border-bottom: 2px solid #f39c12;
+    padding: 1.5rem;
+    border-radius: 0;
+}
+
+.safety-header .modal-card-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    color: #856404;
+    font-weight: 600;
+}
+
+.safety-icon {
+    font-size: 1.8rem;
+    margin-right: 0.75rem;
+    animation: shieldPulse 2s infinite;
+}
+
+.safety-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+/* Modal body styling */
+.safety-modal .modal-card-body {
+    padding: 2rem;
+    background: #fefefe;
+}
+
+.safety-modal .subtitle {
+    color: #666;
+    font-size: 0.95rem;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.safety-modal .field {
+    margin-bottom: 1.5rem;
+}
+
+.safety-modal .label {
+    color: #363636;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.safety-modal .radio {
+    margin-right: 1.5rem;
+    cursor: pointer;
+}
+
+.safety-modal .radio input[type="radio"] {
+    margin-right: 0.5rem;
+}
+
+/* Modal footer styling */
+.safety-modal .modal-card-foot {
+    background: #fafafa;
+    padding: 1.5rem 2rem;
+    border-top: 1px solid #e8e8e8;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.safety-modal .modal-card-foot .button {
+    border: none;
+    border-radius: 6px;
+    font-weight: 500;
+    padding: 0.75rem 2rem;
+    transition: all 0.3s ease;
+}
+
+.safety-modal .button.is-warning {
+    background: linear-gradient(135deg, #f39c12, #e67e22);
+    color: white;
+    box-shadow: 0 4px 12px rgba(243, 156, 18, 0.3);
+}
+
+.safety-modal .button.is-warning:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(243, 156, 18, 0.4);
+}
+
+.safety-modal .button.is-text {
+    color: #666;
+    text-decoration: none;
+}
+
+.safety-modal .button.is-text:hover {
+    color: #333;
+    background: rgba(0, 0, 0, 0.05);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -60%);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+}
+
+@keyframes shieldPulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+/* Mobile responsive for modal */
+@media screen and (max-width: 768px) {
+    .safety-modal {
+        width: 95%;
+        max-width: 400px;
+    }
+    
+    .safety-header {
+        padding: 1.25rem;
+    }
+    
+    .safety-icon {
+        font-size: 1.5rem;
+    }
+    
+    .safety-title {
+        font-size: 1.2rem;
+    }
+    
+    .safety-modal .modal-card-body {
+        padding: 1.5rem;
+    }
+    
+    .safety-modal .modal-card-foot {
+        padding: 1.25rem 1.5rem;
+    }
+    
+    .safety-modal .button {
+        padding: 0.65rem 1.5rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* ============================================================================
+   END MODAL STYLES
+   ============================================================================ */
+
+/* Navbar Customization */
+.navbar {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+}
+
+.navbar-brand strong {
+    color: #363636;
+}
+
+/* Mode Toggle Button in Navbar */
+.mode-toggle-btn {
+    transition: all 0.3s;
+}
+
+.mode-toggle-btn.is-info {
+    background-color: #3e8ed0;
+    color: white;
+}
+
+.mode-toggle-btn.is-primary {
+    background-color: #00d1b2;
+    color: white;
+}
+
+/* Problem Selection */
+.problem-box {
+    cursor: pointer;
+    transition: all 0.3s;
+    min-height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.problem-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+/* Browse Items */
+.browse-item {
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.browse-item:hover {
+    background-color: #f5f5f5;
+    transform: translateY(-2px);
+}
+
+/* Contraindicated supplement styling */
+.browse-item.has-background-danger-light {
+    background-color: #feecf0 !important;
+    border: 2px solid #f14668;
+}
+
+.browse-item.has-background-danger-light:hover {
+    background-color: #fde0e6 !important;
+}
+
+/* Safety warning notifications */
+.notification.is-danger.is-light {
+    background-color: #feecf0;
+    color: #cc0f35;
+    border-left: 4px solid #f14668;
+    margin-bottom: 1rem;
+    padding: 0.75rem;
+}
+
+.notification.is-danger.is-light strong {
+    color: #cc0f35;
+    display: block;
+    margin-bottom: 0.25rem;
+}
+
+/* Results container with contraindications */
+#results-container .box.has-background-danger-light {
+    background-color: #feecf0 !important;
+    border: 2px solid #f14668;
+}
+
+#supplement-detail .box.has-background-danger-light {
+    background-color: #feecf0 !important;
+    border: 2px solid #f14668;
+}
+
+/* Stack items with contraindications */
+#stack-content .has-background-danger-light {
+    background-color: #feecf0 !important;
+    border: 2px solid #f14668;
+    border-radius: 6px;
+    margin-bottom: 0.5rem;
+}
+
+/* Floating Stack Button */
+.stack-float-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 40; /* Below navbar z-index */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    min-width: 120px;
+    height: 50px;
+    font-size: 1.1rem;
+}
+
+.stack-float-btn:hover {
+    transform: scale(1.05);
+}
+
+/* Category Filter Buttons */
+.category-filter {
+    margin: 2px;
+}
+
+/* Results Cards */
+.results-card {
+    transition: all 0.3s;
+}
+
+.results-card:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Hero adjustments for fixed navbar */
+.hero.is-fullheight {
+    min-height: calc(100vh - 52px);
+}
+
+/* Mobile Responsive */
+@media screen and (max-width: 768px) {
+    body {
+        padding-top: 52px;
+    }
+    
+    /* Fix hero section on mobile */
+    .hero.is-fullheight {
+        min-height: calc(100vh - 52px);
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .hero-body {
+        padding: 1.5rem;
+        flex-grow: 1;
+        display: flex;
+        align-items: center;
+    }
+    
+    /* Fix landing page button cutoff */
+    #landing-screen .title.is-1 {
+        font-size: 2rem;
+        margin-bottom: 1rem !important;
+    }
+    
+    #landing-screen .subtitle.is-4 {
+        font-size: 1.2rem;
+        margin-bottom: 1.5rem !important;
+    }
+    
+    #landing-screen .field.has-addons {
+        margin-bottom: 2rem !important;
+    }
+    
+    #landing-screen .button.is-large {
+        font-size: 1.1rem;
+        padding: 1.25rem 1rem;
+    }
+    
+    /* Fix search bar on mobile */
+    #main-search {
+        min-width: unset;
+        width: 100%;
+    }
+    
+    /* Problem selection grid - 2 columns on mobile */
+    #problem-grid .column.is-3 {
+        width: 50%;
+        flex: none;
+    }
+    
+    .problem-box {
+        min-height: 120px;
+        padding: 1rem;
+    }
+    
+    .problem-box .is-size-1 {
+        font-size: 2.5rem !important;
+    }
+    
+    .problem-box .is-size-5 {
+        font-size: 0.9rem !important;
+    }
+    
+    /* Results screen improvements */
+    #results-container .column.is-4 {
+        width: 100%;
+    }
+    
+    /* Browse screen - single column on mobile */
+    #browse-results .column.is-4 {
+        width: 100%;
+    }
+    
+    .stack-float-btn {
+        bottom: 20px;
+        right: 20px;
+        min-width: 100px;
+        height: 45px;
+        font-size: 1rem;
+    }
+    
+    /* Stack screen mobile adjustments */
+    #stack-screen .level {
+        display: block;
+    }
+    
+    #stack-screen .level-left,
+    #stack-screen .level-right {
+        display: block;
+        margin-top: 10px;
+    }
+    
+    /* Navbar adjustments */
+    .navbar-menu {
+        box-shadow: 0 8px 16px rgba(10,10,10,.1);
+    }
+    
+    .navbar-menu .navbar-item {
+        padding: 0.75rem 1rem;
+    }
+}
+
+/* Search bar improvements */
+#main-search {
+    min-width: 300px;
+}
+
+/* Already handled in main mobile media query above */
+
+/* Notification improvements */
+.notification {
+    margin-bottom: 1rem;
+}
+
+/* Notification popup for add to stack */
+.notification-popup {
+    animation: slideIn 0.3s;
+}
+
+/* Tag improvements */
+.tag {
+    margin-right: 0.25rem;
+    margin-bottom: 0.25rem;
+}
+
+/* Loading state (for future use) */
+.is-loading-custom {
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+/* Smooth transitions */
+* {
+    transition: opacity 0.3s ease;
+}
+
+/* Hide screens properly */
+.screen[style*="display: none"] {
+    display: none !important;
+}
+
+/* Better back button */
+.button.is-text {
+    text-decoration: none;
+}
+
+.button.is-text:hover {
+    text-decoration: underline;
+}
+
+/* Results improvements */
+#results-container .box {
+    transition: all 0.3s;
+}
+
+#results-container .box:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Stack view improvements */
+#stack-content .level {
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+#stack-content .level:last-child {
+    border-bottom: none;
+}
+
+/* Advanced mode dense display */
+body.advanced-mode .box {
+    padding: 1rem;
+}
+
+body.advanced-mode .title {
+    margin-bottom: 0.5rem !important;
+}
+
+/* Simple mode spacious display */
+body.simple-mode .box {
+    padding: 2rem;
+}
+
+body.simple-mode .title {
+    margin-bottom: 1rem !important;
+}
+
+/* Fix Bulma select arrow position */
+.select:not(.is-multiple):not(.is-loading)::after {
+    border-color: #3273dc;
+    right: 1.125em;
+    z-index: 4;
+}
+
+/* Better form controls */
+.radio + .radio {
+    margin-left: 1rem;
+}
+
+/* Improve button states */
+.button:active {
+    transform: scale(0.98);
+}
+
+.button.is-success {
+    transition: all 0.3s;
+}
+
+/* FAQ, About, Contact screens styling */
+.content .box {
+    margin-bottom: 1.5rem;
+}
+
+.content h3 {
+    color: #363636;
+}
+
+.content ul {
+    margin-left: 2em;
+}
+
+/* Print styles (for future export feature) */
+@media print {
+    .navbar,
+    .stack-float-btn,
+    .button,
+    button,
+    .modal-backdrop,
+    .safety-modal {
+        display: none !important;
+    }
+    
+    body {
+        padding-top: 0;
+    }
+    
+    .screen {
+        page-break-inside: avoid;
+    }
+}
+
+/* Make sure navbar links don't have underlines */
+.navbar-item {
+    text-decoration: none !important;
+}
+
+/* Contact form styling */
+#contact-screen .box {
+    background-color: #fafafa;
+}
+
+#contact-screen .input,
+#contact-screen .textarea,
+#contact-screen .select select {
+    background-color: white;
+}
+
+/* Evidence level tags consistent coloring */
+.tag.is-success {
+    background-color: #48c78e;
+}
+
+.tag.is-info {
+    background-color: #3e8ed0;
+}
+
+.tag.is-warning {
+    background-color: #ffe08a;
+    color: rgba(0,0,0,.7);
+}
+
+/* Warning icon animations */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Make warning emoji animate subtly */
+.box.has-background-danger-light .media-left .is-size-2 {
+    animation: pulse 2s infinite;
+}

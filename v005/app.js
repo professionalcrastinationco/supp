@@ -1,5 +1,5 @@
-// Supplement Database App Logic - Version 002
-// Added safety filtering and contraindication warnings
+// Supplement Database App Logic - Version 005
+// Safety button pairs with modal interface
 
 // Navigation history for back button
 let navigationHistory = [];
@@ -19,6 +19,7 @@ let userSafetyProfile = {
 // Initialize when page loads
 document.addEventListener('DOMContentLoaded', function() {
     initializeApp();
+    initializeSafetyButtons();
 });
 
 function initializeApp() {
@@ -64,6 +65,90 @@ function initializeApp() {
     
     updateStackCount();
     showScreen('landing-screen');
+}
+
+// Initialize safety button pairs
+function initializeSafetyButtons() {
+    // Add click listeners to all safety buttons
+    document.querySelectorAll('.safety-button').forEach(button => {
+        button.addEventListener('click', handleSafetyButtonClick);
+    });
+}
+
+function handleSafetyButtonClick(e) {
+    const button = e.target;
+    const group = button.closest('.safety-button-group');
+    const question = group.getAttribute('data-question');
+    const value = button.getAttribute('data-value');
+    
+    // Remove selected class from all buttons in this group
+    group.querySelectorAll('.safety-button').forEach(btn => {
+        btn.classList.remove('selected-yes', 'selected-no');
+    });
+    
+    // Add selected class to clicked button
+    button.classList.add(value === 'yes' ? 'selected-yes' : 'selected-no');
+    
+    // Store the selection
+    switch(question) {
+        case 'medications':
+            userSafetyProfile.takingMedications = value === 'yes';
+            break;
+        case 'pregnant':
+            userSafetyProfile.isPregnant = value === 'yes';
+            break;
+        case 'allergies':
+            userSafetyProfile.hasAllergies = value === 'yes';
+            break;
+    }
+    
+    // Check if all questions are answered
+    checkSafetyCompleteness();
+}
+
+function checkSafetyCompleteness() {
+    const selectedButtons = document.querySelectorAll('.safety-button.selected-yes, .safety-button.selected-no');
+    const recommendBtn = document.getElementById('show-recommendations-btn');
+    const reminder = document.getElementById('safety-reminder');
+    
+    if (selectedButtons.length === 3) {
+        // All questions answered
+        recommendBtn.disabled = false;
+        reminder.style.display = 'none';
+    } else {
+        // Not all answered
+        recommendBtn.disabled = true;
+        
+        // Add shake animation if they try to click disabled button
+        recommendBtn.onclick = function(e) {
+            if (this.disabled) {
+                e.preventDefault();
+                this.classList.add('shake');
+                reminder.style.display = 'block';
+                setTimeout(() => this.classList.remove('shake'), 300);
+            }
+        };
+    }
+}
+
+function resetSafetyButtons() {
+    // Clear all selections
+    document.querySelectorAll('.safety-button').forEach(button => {
+        button.classList.remove('selected-yes', 'selected-no');
+    });
+    
+    // Reset safety profile
+    userSafetyProfile = {
+        takingMedications: false,
+        isPregnant: false,
+        hasAllergies: false
+    };
+    
+    // Disable continue button
+    document.getElementById('show-recommendations-btn').disabled = true;
+    
+    // Hide reminder text
+    document.getElementById('safety-reminder').style.display = 'none';
 }
 
 // Global click handler for all dynamic content
@@ -216,14 +301,14 @@ function showProblemSelection() {
 function selectProblem(problemId) {
     currentProblem = problemId;
     navigationHistory.push('problem-screen');
+    
+    // Reset safety buttons when showing safety screen
+    resetSafetyButtons();
     showScreen('safety-screen');
 }
 
 function showRecommendations() {
-    // Store safety selections
-    userSafetyProfile.takingMedications = document.querySelector('input[name="medications"]:checked').value === 'yes';
-    userSafetyProfile.isPregnant = document.querySelector('input[name="pregnant"]:checked').value === 'yes';
-    userSafetyProfile.hasAllergies = document.querySelector('input[name="allergies"]:checked').value === 'yes';
+    // Safety selections are already stored from button clicks
     
     navigationHistory.push('safety-screen');
     
@@ -299,7 +384,73 @@ function skipSafety() {
         isPregnant: false,
         hasAllergies: false
     };
-    showRecommendations();
+    
+    // Navigate directly to recommendations
+    navigationHistory.push('safety-screen');
+    
+    const problem = mockProblems.find(p => p.id === currentProblem);
+    document.getElementById('problem-name').textContent = problem.name;
+    
+    const container = document.getElementById('results-container');
+    container.innerHTML = '';
+    
+    // Get supplements for this problem and sort by safety
+    let supplements = problem.topSupplements.map(id => 
+        mockSupplements.find(s => s.id === id)
+    ).filter(s => s);
+    
+    supplements = sortSupplementsBySafety(supplements);
+    
+    // Show appropriate number based on mode
+    const limit = currentMode === 'simple' ? 3 : supplements.length;
+    supplements.slice(0, limit).forEach((supplement, index) => {
+        const contraindication = isContraindicated(supplement);
+        const ranking = contraindication ? '⚠️' : (index === 0 ? '🥇' : index === 1 ? '🥈' : '🥉');
+        
+        const div = document.createElement('div');
+        div.className = `box ${contraindication ? 'has-background-danger-light' : ''}`;
+        div.innerHTML = `
+            ${getWarningHtml(contraindication)}
+            <article class="media">
+                <div class="media-left">
+                    <span class="is-size-2">${ranking}</span>
+                </div>
+                <div class="media-content">
+                    <div class="content">
+                        <p>
+                            <strong class="is-size-4">${supplement.name}</strong>
+                            <br>
+                            <span class="is-size-5">${supplement.benefits[0]}</span>
+                            <br><br>
+                            <strong>Dose:</strong> ${supplement.dose}<br>
+                            <strong>When:</strong> ${supplement.timing}<br>
+                            <strong>Cost:</strong> ${supplement.price}
+                            ${currentMode === 'advanced' ? `
+                                <br><br>
+                                <strong>Evidence:</strong> <span class="tag is-${supplement.evidence_level === 'gold' ? 'success' : supplement.evidence_level === 'silver' ? 'info' : 'warning'}">${supplement.evidence_level.toUpperCase()}</span>
+                                <br>
+                                <strong>Forms:</strong> ${Object.keys(supplement.forms).join(', ')}
+                                ${supplement.warnings.length ? `<br><strong>Warnings:</strong> ${supplement.warnings.join('; ')}` : ''}
+                            ` : ''}
+                        </p>
+                    </div>
+                    <nav class="level is-mobile">
+                        <div class="level-left">
+                            <a class="level-item button is-small is-info" data-action="showSupplementDetail" data-param="${supplement.id}">
+                                Learn more
+                            </a>
+                            <a class="level-item button is-small is-primary" data-action="addToStack" data-param="${supplement.id}">
+                                Add to stack
+                            </a>
+                        </div>
+                    </nav>
+                </div>
+            </article>
+        `;
+        container.appendChild(div);
+    });
+    
+    showScreen('results-screen');
 }
 
 function showBrowseScreen() {
@@ -499,6 +650,7 @@ function handleMainSearch() {
     if (problem) {
         currentProblem = problem.id;
         navigationHistory.push('landing-screen');
+        resetSafetyButtons();
         showScreen('safety-screen');
     } else {
         // Search supplements
@@ -661,30 +813,3 @@ function showNotification(message, type = 'success') {
         setTimeout(() => notification.remove(), 300);
     }, 3000);
 }
-
-// Add animation styles
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes slideIn {
-        from {
-            transform: translateX(100%);
-            opacity: 0;
-        }
-        to {
-            transform: translateX(0);
-            opacity: 1;
-        }
-    }
-    
-    @keyframes slideOut {
-        from {
-            transform: translateX(0);
-            opacity: 1;
-        }
-        to {
-            transform: translateX(100%);
-            opacity: 0;
-        }
-    }
-`;
-document.head.appendChild(style);
