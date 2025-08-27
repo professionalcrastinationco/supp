@@ -18,8 +18,6 @@ let userSafetyProfile = {
 
 // Initialize when page loads
 document.addEventListener('DOMContentLoaded', function() {
-    // Debug alert for mobile
-    alert('JavaScript is running! v002');
     initializeApp();
 });
 

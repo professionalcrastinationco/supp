@@ -205,12 +205,73 @@ button,
         padding-top: 52px;
     }
     
+    /* Fix hero section on mobile */
+    .hero.is-fullheight {
+        min-height: calc(100vh - 52px);
+        display: flex;
+        flex-direction: column;
+    }
+    
     .hero-body {
         padding: 1.5rem;
+        flex-grow: 1;
+        display: flex;
+        align-items: center;
+    }
+    
+    /* Fix landing page button cutoff */
+    #landing-screen .title.is-1 {
+        font-size: 2rem;
+        margin-bottom: 1rem !important;
+    }
+    
+    #landing-screen .subtitle.is-4 {
+        font-size: 1.2rem;
+        margin-bottom: 1.5rem !important;
+    }
+    
+    #landing-screen .field.has-addons {
+        margin-bottom: 2rem !important;
+    }
+    
+    #landing-screen .button.is-large {
+        font-size: 1.1rem;
+        padding: 1.25rem 1rem;
+    }
+    
+    /* Fix search bar on mobile */
+    #main-search {
+        min-width: unset;
+        width: 100%;
+    }
+    
+    /* Problem selection grid - 2 columns on mobile */
+    #problem-grid .column.is-3 {
+        width: 50%;
+        flex: none;
     }
     
     .problem-box {
         min-height: 120px;
+        padding: 1rem;
+    }
+    
+    .problem-box .is-size-1 {
+        font-size: 2.5rem !important;
+    }
+    
+    .problem-box .is-size-5 {
+        font-size: 0.9rem !important;
+    }
+    
+    /* Results screen improvements */
+    #results-container .column.is-4 {
+        width: 100%;
+    }
+    
+    /* Browse screen - single column on mobile */
+    #browse-results .column.is-4 {
+        width: 100%;
     }
     
     .stack-float-btn {
@@ -219,12 +280,6 @@ button,
         min-width: 100px;
         height: 45px;
         font-size: 1rem;
-    }
-    
-    /* Make columns full width on mobile */
-    .column.is-3,
-    .column.is-4 {
-        width: 50%;
     }
     
     /* Stack screen mobile adjustments */
@@ -253,11 +308,7 @@ button,
     min-width: 300px;
 }
 
-@media screen and (max-width: 768px) {
-    #main-search {
-        min-width: 200px;
-    }
-}
+/* Already handled in main mobile media query above */
 
 /* Notification improvements */
 .notification {

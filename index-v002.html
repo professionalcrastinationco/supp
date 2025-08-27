@@ -91,13 +91,11 @@
                     </div>
                     
                     <!-- Two Main Paths -->
-                    <div class="columns is-centered">
-                        <div class="column is-4">
-                            <button class="button is-large is-fullwidth is-primary" id="need-help-btn">
+                    <div class="columns is-centered is-mobile">
+                        <div class="column is-10-mobile is-4-tablet">
+                            <button class="button is-large is-fullwidth is-primary mb-3" id="need-help-btn">
                                 I need help with something
                             </button>
-                        </div>
-                        <div class="column is-4">
                             <button class="button is-large is-fullwidth is-info" id="know-what-btn">
                                 I know what I want
                             </button>
@@ -126,7 +124,7 @@
     <div id="safety-screen" class="screen" style="display: none;">
         <section class="section">
             <div class="container">
-                <button class="button is-text mb-4" onclick="goBack()">← Back</button>
+                <button class="button is-text mb-4" data-action="goBack">← Back</button>
                 <h1 class="title is-3 has-text-centered mb-6">Quick safety check</h1>
                 
                 <div class="box">
@@ -193,7 +191,7 @@
     <div id="results-screen" class="screen" style="display: none;">
         <section class="section">
             <div class="container">
-                <button class="button is-text mb-4" onclick="goBack()">← Back</button>
+                <button class="button is-text mb-4" data-action="goBack">← Back</button>
                 <h1 class="title is-3 has-text-centered mb-6">
                     Here's what might help with <span id="problem-name"></span>
                 </h1>
@@ -215,7 +213,7 @@
     <div id="browse-screen" class="screen" style="display: none;">
         <section class="section">
             <div class="container">
-                <button class="button is-text mb-4" onclick="goBack()">← Back</button>
+                <button class="button is-text mb-4" data-action="goBack">← Back</button>
                 <h1 class="title is-3 has-text-centered mb-6">Browse Supplements</h1>
                 
                 <!-- Search and Filters -->
@@ -255,7 +253,7 @@
     <div id="detail-screen" class="screen" style="display: none;">
         <section class="section">
             <div class="container">
-                <button class="button is-text mb-4" onclick="goBack()">← Back</button>
+                <button class="button is-text mb-4" data-action="goBack">← Back</button>
                 
                 <div id="supplement-detail">
                     <!-- Detail content will be inserted here -->
@@ -268,7 +266,7 @@
     <div id="stack-screen" class="screen" style="display: none;">
         <section class="section">
             <div class="container">
-                <button class="button is-text mb-4" onclick="goBack()">← Back</button>
+                <button class="button is-text mb-4" data-action="goBack">← Back</button>
                 <h1 class="title is-3 has-text-centered mb-6">Your Stack</h1>
                 
                 <div id="stack-content">
@@ -288,7 +286,7 @@
     <div id="faq-screen" class="screen" style="display: none;">
         <section class="section">
             <div class="container">
-                <button class="button is-text mb-4" onclick="goBack()">← Back</button>
+                <button class="button is-text mb-4" data-action="goBack">← Back</button>
                 <h1 class="title is-2 has-text-centered mb-6">Frequently Asked Questions</h1>
                 
                 <div class="columns">
@@ -342,7 +340,7 @@
     <div id="about-screen" class="screen" style="display: none;">
         <section class="section">
             <div class="container">
-                <button class="button is-text mb-4" onclick="goBack()">← Back</button>
+                <button class="button is-text mb-4" data-action="goBack">← Back</button>
                 <h1 class="title is-2 has-text-centered mb-6">About Whole Health DB</h1>
                 
                 <div class="columns">
@@ -396,7 +394,7 @@
     <div id="contact-screen" class="screen" style="display: none;">
         <section class="section">
             <div class="container">
-                <button class="button is-text mb-4" onclick="goBack()">← Back</button>
+                <button class="button is-text mb-4" data-action="goBack">← Back</button>
                 <h1 class="title is-2 has-text-centered mb-6">Contact Us</h1>
                 
                 <div class="columns">
